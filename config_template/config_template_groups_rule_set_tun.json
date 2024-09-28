@@ -173,7 +173,7 @@
         "outbound": "block"
       },
       {
-        "rule_set": ["geoip-cn", "geosite-cn"],
+        "rule_set": ["geoip-cn", "geosite-cn", "geosite-wechat"],
         "outbound": "direct"
       },
       {
@@ -219,6 +219,13 @@
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/category-ai-chat-!cn.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "geosite-wechat",
+        "type": "remote",
+        "format": "source",
+        "url": "https://github.com/Toperlock/sing-box-geosite/raw/main/wechat.json",
         "download_detour": "Proxy"
       }
     ]

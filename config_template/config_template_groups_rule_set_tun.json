@@ -77,8 +77,7 @@
         "America",
         "direct"
       ],
-      "interrupt_exist_connections": true,
-      "default": "Singapore"
+      "interrupt_exist_connections": true
     },
     {
       "type": "selector",

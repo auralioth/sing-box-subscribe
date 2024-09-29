@@ -8,7 +8,6 @@ import tempfile
 import shutil
 import tempfile  # 导入 tempfile 模块
 from datetime import datetime, timedelta
-from gevent import pywsgi
 
 app = Flask(__name__, template_folder='../templates')  # 指定模板文件夹的路径
 app.secret_key = 'sing-box'  # 替换为实际的密钥
@@ -344,6 +343,4 @@ def download_config():
         return str(e)  # 或者适当处理异常，例如返回一个错误页面
 """
 if __name__ == '__main__':
-    # app.run(debug=True, host='0.0.0.0')
-    http_server = pywsgi.WSGIServer(('', 5000), app)
-    http_server.serve_forever()
+    app.run(debug=True, host='0.0.0.0')

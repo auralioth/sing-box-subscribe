@@ -168,19 +168,6 @@
         "outbound": "dns-out"
       },
       {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "port": 853
-          },
-          {
-            "protocol": "stun"
-          }
-        ],
-        "outbound": "block"
-      },
-      {
         "rule_set": "geosite-category-ads-all",
         "outbound": "block"
       },

@@ -14,6 +14,7 @@
       {
         "tag": "dns_direct",
         "address": "https://101.6.6.6/dns-query",
+        "strategy": "prefer_ipv4",
         "detour": "direct"
       },
       {

@@ -13,8 +13,7 @@
       },
       {
         "tag": "dns_direct",
-        "address": "https://101.6.6.6/dns-query",
-        "strategy": "ipv4_only",
+        "address": "https://1.12.12.12/dns-query",
         "detour": "direct"
       },
       {

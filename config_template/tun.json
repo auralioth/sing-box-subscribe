@@ -14,6 +14,7 @@
       {
         "tag": "dns_direct",
         "address": "https://1.12.12.12/dns-query",
+        "strategy": "ipv4_only",
         "detour": "direct"
       },
       {
@@ -59,7 +60,6 @@
         "client_subnet": "114.114.114.114/24"
       }
     ],
-    "strategy": "ipv4_only",
     "final": "dns_proxy"
   },
   "inbounds": [
@@ -68,12 +68,13 @@
       "tag": "tun-in",
       "mtu": 9000,
       "gso": false,
-      "address": "172.18.0.1/30",
+      "address": ["172.18.0.1/30","fdfe:dcba:9876::1/126"],
       "auto_route": true,
       "strict_route": false,
       "stack": "system",
       "sniff": true,
-      "sniff_override_destination": false
+      "sniff_override_destination": false,
+      "endpoint_independent_nat": false
     }
   ],
   "outbounds": [
@@ -95,7 +96,8 @@
       "tag": "AI",
       "outbounds": ["TaiWan", "Singapore", "Japan", "America"],
       "interrupt_exist_connections": true,
-      "default": "Singapore"
+      "default": "Singapore",
+      "interrupt_exist_connections": true
     },
     {
       "type": "urltest",
@@ -103,7 +105,8 @@
       "outbounds": ["{all}"],
       "filter": [
         { "action": "include", "keywords": ["🇭🇰|HK|hk|香港|港|HongKong"] }
-      ]
+      ],
+      "interrupt_exist_connections": true
     },
     {
       "type": "urltest",
@@ -111,7 +114,8 @@
       "outbounds": ["{all}"],
       "filter": [
         { "action": "include", "keywords": ["🇹🇼|TW|tw|台湾|臺灣|台|Taiwan"] }
-      ]
+      ],
+      "interrupt_exist_connections": true
     },
     {
       "type": "urltest",
@@ -119,7 +123,8 @@
       "outbounds": ["{all}"],
       "filter": [
         { "action": "include", "keywords": ["🇸🇬|SG|sg|新加坡|狮|Singapore"] }
-      ]
+      ],
+      "interrupt_exist_connections": true
     },
     {
       "type": "urltest",
@@ -127,7 +132,8 @@
       "outbounds": ["{all}"],
       "filter": [
         { "action": "include", "keywords": ["🇯🇵|JP|jp|日本|日|Japan"] }
-      ]
+      ],
+      "interrupt_exist_connections": true
     },
     {
       "type": "urltest",
@@ -135,7 +141,8 @@
       "outbounds": ["{all}"],
       "filter": [
         { "action": "include", "keywords": ["🇺🇸|US|us|美国|美|United States"] }
-      ]
+      ],
+      "interrupt_exist_connections": true
     },
     {
       "type": "direct",
@@ -216,7 +223,8 @@
         "type": "remote",
         "tag": "geosite-geolocation-cn",
         "format": "binary",
-        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/geolocation-cn.srs"
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/geolocation-cn.srs",
+        "download_detour": "Proxy"
       },
       {
         "tag": "geosite-geolocation-!cn",

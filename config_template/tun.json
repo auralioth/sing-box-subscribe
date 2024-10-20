@@ -59,7 +59,6 @@
         "client_subnet": "114.114.114.114/24"
       }
     ],
-    "strategy": "ipv4_only",
     "final": "dns_proxy"
   },
   "inbounds": [

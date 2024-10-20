@@ -14,7 +14,6 @@
       {
         "tag": "dns_direct",
         "address": "https://1.12.12.12/dns-query",
-        "strategy": "ipv4_only",
         "detour": "direct"
       },
       {

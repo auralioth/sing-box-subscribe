@@ -18,6 +18,11 @@
         "detour": "direct"
       },
       {
+        "tag": "dns_authentic",
+        "address": "8.8.8.8",
+        "detour": "direct"
+      },
+      {
         "tag": "dns_block",
         "address": "rcode://success"
       }
@@ -31,6 +36,10 @@
         "rule_set": "geosite-category-ads-all",
         "server": "dns_block",
         "disable_cache": true
+      },
+      {
+        "domain_suffix": ["tsinghua.edu.cn"],
+        "server": "dns_authentic"
       },
       {
         "clash_mode": "direct",
@@ -67,7 +76,7 @@
       "type": "tun",
       "tag": "tun-in",
       "mtu": 9000,
-      "gso": false,
+      "gso": true,
       "address": ["172.18.0.1/30","fdfe:dcba:9876::1/126"],
       "auto_route": true,
       "auto_redirect": true,

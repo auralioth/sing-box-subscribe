@@ -115,7 +115,8 @@
       "tag": "HongKong",
       "outbounds": ["{all}"],
       "filter": [
-        { "action": "include", "keywords": ["🇭🇰|HK|hk|香港|港|HongKong"] }
+        { "action": "include", "keywords": ["🇭🇰|HK|hk|香港|港|HongKong"] },
+        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"]}
       ],
       "interrupt_exist_connections": true
     },
@@ -124,7 +125,8 @@
       "tag": "TaiWan",
       "outbounds": ["{all}"],
       "filter": [
-        { "action": "include", "keywords": ["🇹🇼|TW|tw|台湾|臺灣|台|Taiwan"] }
+        { "action": "include", "keywords": ["🇹🇼|TW|tw|台湾|臺灣|台|Taiwan"] },
+        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"]}
       ],
       "interrupt_exist_connections": true
     },
@@ -133,7 +135,8 @@
       "tag": "Singapore",
       "outbounds": ["{all}"],
       "filter": [
-        { "action": "include", "keywords": ["🇸🇬|SG|sg|新加坡|狮|Singapore"] }
+        { "action": "include", "keywords": ["🇸🇬|SG|sg|新加坡|狮|Singapore"] },
+        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"]}
       ],
       "interrupt_exist_connections": true
     },
@@ -142,7 +145,8 @@
       "tag": "Japan",
       "outbounds": ["{all}"],
       "filter": [
-        { "action": "include", "keywords": ["🇯🇵|JP|jp|日本|日|Japan"] }
+        { "action": "include", "keywords": ["🇯🇵|JP|jp|日本|日|Japan"] },
+        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"]}
       ],
       "interrupt_exist_connections": true
     },
@@ -151,7 +155,8 @@
       "tag": "America",
       "outbounds": ["{all}"],
       "filter": [
-        { "action": "include", "keywords": ["🇺🇸|US|us|美国|美|United States"] }
+        { "action": "include", "keywords": ["🇺🇸|US|us|美国|美|United States"] },
+        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"]}
       ],
       "interrupt_exist_connections": true
     },

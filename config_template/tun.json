@@ -183,17 +183,8 @@
         ],
         "outbound": "dns-out"
       },
-            {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "port": 853
-          },
-          {
-            "protocol": "stun"
-          }
-        ],
+      {
+        "protocol": "stun",
         "outbound": "block"
       },
       {

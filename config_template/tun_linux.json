@@ -115,7 +115,7 @@
       "outbounds": ["{all}"],
       "filter": [
         { "action": "include", "keywords": ["🇭🇰|HK|hk|香港|港|HongKong"] },
-        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"], "for":["TAG"] }
+        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"], "for":["airport_tag"] }
       ],
       "interrupt_exist_connections": true
     },
@@ -125,7 +125,7 @@
       "outbounds": ["{all}"],
       "filter": [
         { "action": "include", "keywords": ["🇹🇼|TW|tw|台湾|臺灣|台|Taiwan"] },
-        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"], "for":["TAG"] }
+        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"], "for":["airport_tag"] }
       ],
       "interrupt_exist_connections": true
     },
@@ -135,7 +135,7 @@
       "outbounds": ["{all}"],
       "filter": [
         { "action": "include", "keywords": ["🇸🇬|SG|sg|新加坡|狮|Singapore"] },
-        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"], "for":["TAG"] }
+        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"], "for":["airport_tag"] }
       ],
       "interrupt_exist_connections": true
     },
@@ -145,7 +145,7 @@
       "outbounds": ["{all}"],
       "filter": [
         { "action": "include", "keywords": ["🇯🇵|JP|jp|日本|日|Japan"] },
-        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"], "for":["TAG"] }
+        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"], "for":["airport_tag"] }
       ],
       "interrupt_exist_connections": true
     },
@@ -155,7 +155,7 @@
       "outbounds": ["{all}"],
       "filter": [
         { "action": "include", "keywords": ["🇺🇸|US|us|美国|美|United States"] },
-        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"], "for":["TAG"] }
+        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"], "for":["airport_tag"] }
       ],
       "interrupt_exist_connections": true
     },

@@ -1,267 +1,280 @@
 {
-    "log": {
-      "disabled": false,
-      "level": "debug",
-      "timestamp": true
-    },
-    "dns": {
-      "servers": [
-        {
-          "tag": "dns_proxy",
-          "address": "https://8.8.8.8/dns-query",
-          "detour": "Proxy"
-        },
-        {
-          "tag": "dns_direct",
-          "address": "223.5.5.5",
-          "detour": "direct"
-        },
-        {
-          "tag": "dns_authentic",
-          "address": "114.114.114.114",
-          "detour": "direct"
-        },
-        {
-          "tag": "dns_block",
-          "address": "rcode://success"
-        }
-      ],
-      "rules": [
-        {
-          "outbound": "any",
-          "server": "dns_direct"
-        },
-        {
-          "rule_set": "geosite-category-ads-all",
-          "server": "dns_block",
-          "disable_cache": true
-        },
-        {
-          "domain_suffix": ["tsinghua.edu.cn"],
-          "server": "dns_authentic"
-        },
-        {
-          "clash_mode": "direct",
-          "server": "dns_direct"
-        },
-        {
-          "clash_mode": "global",
-          "server": "dns_proxy"
-        },
-        {
-          "rule_set": "geosite-geolocation-cn",
-          "server": "dns_direct"
-        },
-        {
-          "type": "logical",
-          "mode": "and",
-          "rules": [
-            {
-              "rule_set": "geosite-geolocation-!cn",
-              "invert": true
-            },
-            {
-              "rule_set": "geoip-cn"
-            }
-          ],
-          "server": "dns_proxy",
-          "client_subnet": "114.114.114.114/24"
-        }
-      ],
-      "final": "dns_proxy"
-    },
-    "inbounds": [
+  "log": {
+    "disabled": false,
+    "level": "debug",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
       {
-        "type": "tun",
-        "tag": "tun-in",
-        "mtu": 9000,
-        "gso": false,
-        "address": ["172.18.0.1/30","fdfe:dcba:9876::1/126"],
-        "route_exclude_address": ["192.168.0.0/16"],
-        "auto_route": true,
-        "strict_route": true,
-        "stack": "system",
-        "sniff": true,
-        "sniff_override_destination": false,
-        "endpoint_independent_nat": false
+        "tag": "dns_proxy",
+        "address": "https://8.8.8.8/dns-query",
+        "strategy": "ipv4_only",
+        "detour": "Proxy"
+      },
+      {
+        "tag": "dns_direct",
+        "address": "223.5.5.5",
+        "detour": "direct"
+      },
+      {
+        "tag": "dns_authentic",
+        "address": "114.114.114.114",
+        "detour": "direct"
+      },
+      {
+        "tag": "dns_block",
+        "address": "rcode://success"
       }
     ],
-    "outbounds": [
+    "rules": [
       {
-        "type": "selector",
-        "tag": "Proxy",
-        "outbounds": [
-          "HongKong",
-          "TaiWan",
-          "Singapore",
-          "Japan",
-          "America",
-          "direct"
+        "outbound": "any",
+        "server": "dns_direct"
+      },
+      {
+        "rule_set": "geosite-category-ads-all",
+        "server": "dns_block",
+        "disable_cache": true
+      },
+      {
+        "domain_suffix": ["tsinghua.edu.cn"],
+        "server": "dns_authentic"
+      },
+      {
+        "clash_mode": "direct",
+        "server": "dns_direct"
+      },
+      {
+        "clash_mode": "global",
+        "server": "dns_proxy"
+      },
+      {
+        "rule_set": "geosite-geolocation-cn",
+        "server": "dns_direct"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "geosite-geolocation-!cn",
+            "invert": true
+          },
+          {
+            "rule_set": "geoip-cn"
+          }
         ],
-        "interrupt_exist_connections": true
-      },
-      {
-        "type": "selector",
-        "tag": "AI",
-        "outbounds": ["TaiWan", "Singapore", "Japan", "America"],
-        "default": "Singapore",
-        "interrupt_exist_connections": true
-      },
-      {
-        "type": "urltest",
-        "tag": "HongKong",
-        "outbounds": ["{all}"],
-        "filter": [
-          { "action": "include", "keywords": ["🇭🇰|HK|hk|香港|港|HongKong"] },
-          { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"]}
-        ],
-        "interrupt_exist_connections": true
-      },
-      {
-        "type": "urltest",
-        "tag": "TaiWan",
-        "outbounds": ["{all}"],
-        "filter": [
-          { "action": "include", "keywords": ["🇹🇼|TW|tw|台湾|臺灣|台|Taiwan"] },
-          { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"]}
-        ],
-        "interrupt_exist_connections": true
-      },
-      {
-        "type": "urltest",
-        "tag": "Singapore",
-        "outbounds": ["{all}"],
-        "filter": [
-          { "action": "include", "keywords": ["🇸🇬|SG|sg|新加坡|狮|Singapore"] },
-          { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"]}
-        ],
-        "interrupt_exist_connections": true
-      },
-      {
-        "type": "urltest",
-        "tag": "Japan",
-        "outbounds": ["{all}"],
-        "filter": [
-          { "action": "include", "keywords": ["🇯🇵|JP|jp|日本|日|Japan"] },
-          { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"]}
-        ],
-        "interrupt_exist_connections": true
-      },
-      {
-        "type": "urltest",
-        "tag": "America",
-        "outbounds": ["{all}"],
-        "filter": [
-          { "action": "include", "keywords": ["🇺🇸|US|us|美国|美|United States"] },
-          { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"]}
-        ],
-        "interrupt_exist_connections": true
-      },
-      {
-        "type": "direct",
-        "tag": "direct"
-      },
-      {
-        "type": "dns",
-        "tag": "dns-out"
-      },
-      {
-        "type": "block",
-        "tag": "block"
+        "server": "dns_proxy",
+        "client_subnet": "114.114.114.114/24"
       }
     ],
-    "route": {
-      "auto_detect_interface": true,
-      "final": "Proxy",
-      "rules": [
-        {
-          "type": "logical",
-          "mode": "or",
-          "rules": [
-            {
-              "protocol": "dns"
-            },
-            {
-              "port": 53
-            }
-          ],
-          "outbound": "dns-out"
-        },
-        {
-          "protocol": "stun",
-          "outbound": "block"
-        },
-        {
-          "rule_set": "geosite-category-ads-all",
-          "outbound": "block"
-        },
-        {
-          "ip_is_private": true,
-          "outbound": "direct"
-        },
-        {
-          "rule_set": [
-            "geoip-cn",
-            "geosite-geolocation-cn"
-          ],
-          "outbound": "direct"
-        },
-        {
-          "rule_set": ["geosite-category-ai-chat-!cn"],
-          "outbound": "AI"
-        }
+    "final": "dns_proxy"
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "mtu": 9000,
+      "gso": true,
+      "address": ["172.18.0.1/30","fdfe:dcba:9876::1/126"],
+      "auto_route": true,
+      "strict_route": false,
+      "stack": "system",
+      "sniff": true,
+      "sniff_override_destination": false,
+      "endpoint_independent_nat": false
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "selector",
+      "tag": "Proxy",
+      "outbounds": [
+        "HongKong",
+        "TaiWan",
+        "Singapore",
+        "Japan",
+        "America",
+        "direct"
       ],
-      "rule_set": [
-        {
-          "tag": "geosite-category-ads-all",
-          "type": "remote",
-          "format": "binary",
-          "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/category-ads-all.srs",
-          "download_detour": "Proxy"
-        },
-        {
-          "type": "remote",
-          "tag": "geosite-geolocation-cn",
-          "format": "binary",
-          "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/geolocation-cn.srs",
-          "download_detour": "Proxy"
-        },
-        {
-          "tag": "geosite-geolocation-!cn",
-          "type": "remote",
-          "format": "binary",
-          "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/geolocation-!cn.srs",
-          "download_detour": "Proxy"
-        },
-        {
-          "type": "remote",
-          "tag": "geoip-cn",
-          "format": "binary",
-          "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geoip/cn.srs",
-          "download_detour": "Proxy"
-        },
-        {
-          "tag": "geosite-category-ai-chat-!cn",
-          "type": "remote",
-          "format": "binary",
-          "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/category-ai-chat-!cn.srs",
-          "download_detour": "Proxy"
-        }
-      ]
+      "interrupt_exist_connections": true
     },
-    "experimental": {
-      "clash_api": {
-        "external_controller": "127.0.0.1:9097",
-        "external_ui": "ui",
-        "external_ui_download_detour": "Proxy",
-        "default_mode": "rule",
-        "access_control_allow_origin": [
-          "http://127.0.0.1"
+    {
+      "type": "selector",
+      "tag": "AI",
+      "outbounds": ["TaiWan", "Singapore", "Japan", "America"],
+      "default": "Singapore",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "urltest",
+      "tag": "HongKong",
+      "outbounds": ["{all}"],
+      "filter": [
+        { "action": "include", "keywords": ["🇭🇰|HK|hk|香港|港|HongKong"] },
+        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"], "for":["airport_tag"] }
+      ],
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "urltest",
+      "tag": "TaiWan",
+      "outbounds": ["{all}"],
+      "filter": [
+        { "action": "include", "keywords": ["🇹🇼|TW|tw|台湾|臺灣|台|Taiwan"] },
+        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"], "for":["airport_tag"] }
+      ],
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "urltest",
+      "tag": "Singapore",
+      "outbounds": ["{all}"],
+      "filter": [
+        { "action": "include", "keywords": ["🇸🇬|SG|sg|新加坡|狮|Singapore"] },
+        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"], "for":["airport_tag"] }
+      ],
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "urltest",
+      "tag": "Japan",
+      "outbounds": ["{all}"],
+      "filter": [
+        { "action": "include", "keywords": ["🇯🇵|JP|jp|日本|日|Japan"] },
+        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"], "for":["airport_tag"] }
+      ],
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "urltest",
+      "tag": "America",
+      "outbounds": ["{all}"],
+      "filter": [
+        { "action": "include", "keywords": ["🇺🇸|US|us|美国|美|United States"] },
+        { "action": "exclude", "keywords": ["([2-9]|[0-9]{2,})x"], "for":["airport_tag"] }
+      ],
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "direct",
+      "tag": "direct"
+    },
+    {
+      "type": "dns",
+      "tag": "dns-out"
+    },
+    {
+      "type": "block",
+      "tag": "block"
+    }
+  ],
+  "route": {
+    "auto_detect_interface": true,
+    "final": "Proxy",
+    "rules": [
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "protocol": "dns"
+          },
+          {
+            "port": 53
+          }
         ],
-        "access_control_allow_private_network": false
+        "outbound": "dns-out"
       },
-      "cache_file": {
-        "enabled": true
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 853
+          },
+          {
+            "network": "udp",
+            "port": 443
+          },
+          {
+            "protocol": "stun"
+          }
+        ],
+        "outbound": "block"
+      },
+      {
+        "rule_set": "geosite-category-ads-all",
+        "outbound": "block"
+      },
+      {
+        "ip_is_private": true,
+        "outbound": "direct"
+      },
+      {
+        "rule_set": [
+          "geoip-cn",
+          "geosite-geolocation-cn"
+        ],
+        "outbound": "direct"
+      },
+      {
+        "rule_set": ["geosite-category-ai-chat-!cn"],
+        "outbound": "AI"
       }
+    ],
+    "rule_set": [
+      {
+        "tag": "geosite-category-ads-all",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/category-ads-all.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "type": "remote",
+        "tag": "geosite-geolocation-cn",
+        "format": "binary",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/geolocation-cn.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "geosite-geolocation-!cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/geolocation-!cn.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "type": "remote",
+        "tag": "geoip-cn",
+        "format": "binary",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geoip/cn.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "geosite-category-ai-chat-!cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/category-ai-chat-!cn.srs",
+        "download_detour": "Proxy"
+      }
+    ]
+  },
+  "experimental": {
+    "clash_api": {
+      "external_controller": "127.0.0.1:9097",
+      "external_ui": "ui",
+      "external_ui_download_detour": "Proxy",
+      "default_mode": "rule",
+      "access_control_allow_origin": [
+        "http://127.0.0.1"
+      ],
+      "access_control_allow_private_network": false
+    },
+    "cache_file": {
+      "enabled": true
     }
   }
+}
